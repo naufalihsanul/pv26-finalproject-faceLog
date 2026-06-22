@@ -1,0 +1,127 @@
+/* FaceLog Global Stylesheet — warna dari theme.py */
+
+QMainWindow, QDialog, QWidget {
+    background-color: {{BG}};
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 13px;
+    color: {{TEXT}};
+}
+
+/* === SIDEBAR === */
+QFrame#sidebar {
+    background-color: {{SIDEBAR_BG}};
+    min-width: 220px;
+    max-width: 220px;
+    border: none;
+}
+
+QPushButton#sidebarMenu {
+    color: {{SIDEBAR_FG}};
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 13px;
+    margin: 2px 10px;
+}
+QPushButton#sidebarMenu:hover {
+    background-color: rgba(255,255,255,0.08);
+    color: {{SURFACE}};
+}
+QPushButton#sidebarMenuActive {
+    color: {{SURFACE}};
+    background-color: {{PRIMARY}};
+    border: none;
+    border-radius: 6px;
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 2px 10px;
+}
+
+/* === CONTENT AREA === */
+QWidget#mainContent {
+    background-color: {{BG}};
+}
+
+/* === CARD === */
+QFrame#statCard {
+    background-color: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 10px;
+}
+
+/* === LABELS === */
+QLabel {
+    background: transparent;
+    border: none;
+    color: {{TEXT}};
+}
+
+/* === TOMBOL UMUM === */
+QPushButton {
+    background-color: {{PRIMARY}};
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-weight: 600;
+}
+QPushButton:hover { background-color: {{PRIMARY_DK}}; }
+QPushButton:pressed { background-color: {{PRIMARY_DK}}; }
+QPushButton:disabled {
+    background-color: {{BORDER}};
+    color: {{TEXT_MUTED}};
+}
+
+/* === INPUT === */
+QLineEdit, QDateEdit, QComboBox {
+    background-color: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: {{TEXT}};
+    min-height: 28px;
+}
+QLineEdit:focus, QDateEdit:focus, QComboBox:focus {
+    border-color: {{PRIMARY}};
+}
+
+/* === TABEL === */
+QTableWidget {
+    background-color: {{SURFACE}};
+    border: 1px solid {{BORDER}};
+    border-radius: 8px;
+    gridline-color: {{BG}};
+    alternate-background-color: #f6f8fa;
+    selection-background-color: #e7f1ff;
+    selection-color: {{PRIMARY}};
+}
+QTableWidget::item { padding: 6px 8px; }
+QHeaderView::section {
+    background-color: {{BG}};
+    color: {{TEXT_MUTED}};
+    font-weight: 700;
+    font-size: 12px;
+    border: none;
+    padding: 10px 8px;
+    border-bottom: 2px solid {{BORDER}};
+}
+
+/* === CHECKBOX === */
+QCheckBox { color: {{TEXT}}; }
+QCheckBox::indicator {
+    width: 16px; height: 16px;
+    border: 1px solid {{BORDER}};
+    border-radius: 4px;
+    background: {{SURFACE}};
+}
+QCheckBox::indicator:checked {
+    background-color: {{PRIMARY}};
+    border-color: {{PRIMARY}};
+}
+
+/* === DIALOG === */
+QDialog { background-color: {{SURFACE}}; }
