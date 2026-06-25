@@ -9,7 +9,7 @@ from ui.components.history_table import HistoryTable
 
 
 class StudentHistory(QWidget):
-    # Inisialisasi riwayat absensi mahasiswa.
+
     def __init__(self, db):
         super().__init__()
         self.db = db
@@ -19,7 +19,7 @@ class StudentHistory(QWidget):
         self.stack = QStackedWidget()
         layout.addWidget(self.stack)
 
-        # --- Halaman 0: Daftar kelas ---
+
         pg0 = QWidget()
         vl0 = QVBoxLayout(pg0)
         lbl = QLabel("Riwayat Absensi — Pilih Mata Kuliah")
@@ -35,7 +35,7 @@ class StudentHistory(QWidget):
         vl0.addWidget(self.tbl_courses)
         self.stack.addWidget(pg0)
 
-        # --- Halaman 1: Tabel riwayat ---
+
         pg1 = QWidget()
         vl1 = QVBoxLayout(pg1)
 
@@ -45,7 +45,7 @@ class StudentHistory(QWidget):
         btn_back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         vl1.addWidget(btn_back)
 
-        # Komponen tabel riwayat bersama (tanpa filter tanggal untuk mahasiswa)
+       
         self.history = HistoryTable(
             headers=["Sesi", "Status Absen", "Waktu"],
             title="Riwayat Absensi Saya",
@@ -56,11 +56,11 @@ class StudentHistory(QWidget):
         vl1.addWidget(self.history)
         self.stack.addWidget(pg1)
 
-    # Muat matkul aktif mahasiswa.
+
     def load_data(self):
         uid = SessionManager.get_user_id()
         courses = self.db.get_student_courses(uid)
-        # Hanya tampilkan yang sudah active
+
         active = [c for c in courses if c["status"] == "active"]
 
         self.tbl_courses.setSortingEnabled(False)
@@ -79,7 +79,7 @@ class StudentHistory(QWidget):
             self.tbl_courses.setCellWidget(i, 2, w)
         self.tbl_courses.setSortingEnabled(True)
 
-    # Tampilkan riwayat absensi matkul.
+
     def buka_riwayat(self, student_id, course_name):
         logs = self.db.get_logs_by_student(student_id)
         rows = [

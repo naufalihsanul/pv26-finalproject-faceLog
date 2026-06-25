@@ -9,18 +9,18 @@ from ui.components.history_table import HistoryTable
 
 
 class GlobalHistory(QWidget):
-    # Inisialisasi riwayat absensi global.
+
     def __init__(self, db):
         super().__init__()
         self.db = db
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
 
-        # Stacked: halaman 0 = daftar matkul, halaman 1 = riwayat
+
         self.stack = QStackedWidget()
         layout.addWidget(self.stack)
 
-        # --- Halaman 0: Pilih mata kuliah ---
+
         pg0 = QWidget()
         vl0 = QVBoxLayout(pg0)
 
@@ -39,7 +39,7 @@ class GlobalHistory(QWidget):
         vl0.addWidget(self.tbl_courses)
         self.stack.addWidget(pg0)
 
-        # --- Halaman 1: Tabel riwayat ---
+
         pg1 = QWidget()
         vl1 = QVBoxLayout(pg1)
 
@@ -49,7 +49,7 @@ class GlobalHistory(QWidget):
         btn_back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         vl1.addWidget(btn_back)
 
-        # Komponen tabel riwayat — dipakai bersama
+
         self.history = HistoryTable(
             headers=["ID Log", "Sesi", "NIM", "Nama", "Status", "Waktu"],
             title="Riwayat Absensi",
@@ -58,12 +58,12 @@ class GlobalHistory(QWidget):
         vl1.addWidget(self.history)
         self.stack.addWidget(pg1)
 
-    # Muat semua matkul.
+
     def load_data(self):
         self._courses = self.db.get_all_courses()
         self.tampilkan_matkul(self._courses)
 
-    # Tampilkan matkul di tabel.
+\
     def tampilkan_matkul(self, data):
         self.tbl_courses.setSortingEnabled(False)
         self.tbl_courses.setRowCount(len(data))
@@ -84,7 +84,7 @@ class GlobalHistory(QWidget):
             self.tbl_courses.setCellWidget(i, 3, w)
         self.tbl_courses.setSortingEnabled(True)
 
-    # Tampilkan riwayat absensi matkul.
+
     def buka_riwayat(self, course_id):
         logs = self.db.get_logs_by_course(course_id)
         rows = [

@@ -10,7 +10,7 @@ from ui import theme
 
 
 class StudentCourses(QWidget):
-    # Inisialisasi halaman kelas mahasiswa.
+
     def __init__(self, db):
         super().__init__()
         self.db = db
@@ -25,7 +25,7 @@ class StudentCourses(QWidget):
         lbl_kelas.setStyleSheet("font-size: 16px; font-weight: bold; margin-top: 10px;")
         layout.addWidget(lbl_kelas)
 
-        # Tabel kelas yang diikuti
+
         self.tbl_kelas = QTableWidget()
         self.tbl_kelas.setColumnCount(4)
         self.tbl_kelas.setHorizontalHeaderLabels(["Kode", "Nama Matkul", "Dosen", "Status"])
@@ -38,7 +38,7 @@ class StudentCourses(QWidget):
         lbl_join.setStyleSheet("font-size: 16px; font-weight: bold; margin-top: 10px;")
         layout.addWidget(lbl_join)
 
-        # Tabel semua kelas tersedia untuk join
+
         self.tbl_all = QTableWidget()
         self.tbl_all.setColumnCount(4)
         self.tbl_all.setHorizontalHeaderLabels(["Kode", "Nama Matkul", "Dosen", "Aksi"])
@@ -47,7 +47,7 @@ class StudentCourses(QWidget):
         self.tbl_all.setSortingEnabled(True)
         layout.addWidget(self.tbl_all)
 
-    # Muat data kelas mahasiswa.
+
     def load_data(self):
         uid = SessionManager.get_user_id()
         if not uid: return
@@ -55,7 +55,7 @@ class StudentCourses(QWidget):
         profile = self.db.get_student_profile(uid)
         has_face = bool(profile and profile.get("fitur_wajah"))
 
-        # Kelas yang sudah diikuti
+
         enrolled = self.db.get_student_courses(uid)
         enrolled_ids = {c["id"] for c in enrolled}
         self.tbl_kelas.setSortingEnabled(False)
@@ -72,7 +72,7 @@ class StudentCourses(QWidget):
             self.tbl_kelas.setItem(i, 3, status_item)
         self.tbl_kelas.setSortingEnabled(True)
 
-        # Semua kelas yang belum diikuti
+
         all_courses = self.db.get_all_courses()
         available = [c for c in all_courses if c["id"] not in enrolled_ids]
         self.tbl_all.setSortingEnabled(False)
@@ -84,7 +84,7 @@ class StudentCourses(QWidget):
 
             btn = QPushButton("  Request Bergabung")
             btn.setIcon(qta.icon("fa5s.paper-plane", color="white"))
-            btn.setEnabled(has_face)  # Wajib registrasi wajah dulu
+            btn.setEnabled(has_face)  
             btn.clicked.connect(
                 lambda _, cid=c["id"]: self.request_gabung(uid, cid)
             )
@@ -93,7 +93,7 @@ class StudentCourses(QWidget):
             self.tbl_all.setCellWidget(i, 3, w)
         self.tbl_all.setSortingEnabled(True)
 
-    # Request gabung kelas baru.
+
     def request_gabung(self, student_id, course_id):
         ok, msg = self.db.request_join_course(student_id, course_id)
         if ok:

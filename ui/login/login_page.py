@@ -9,10 +9,10 @@ from ui import theme
 
 
 class LoginPage(QWidget):
-    # Sinyal dikirim setelah login berhasil
+
     login_successful = Signal(str)
 
-    # Inisialisasi halaman login aplikasi.
+
     def __init__(self, db_manager):
         super().__init__()
         self.db = db_manager
@@ -20,14 +20,14 @@ class LoginPage(QWidget):
         self.setFixedSize(420, 500)
         self.bangun_ui()
 
-    # Buat antarmuka login aplikasi.
+
     def bangun_ui(self):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(50, 60, 50, 40)
         layout.setSpacing(16)
         layout.setAlignment(Qt.AlignTop)
 
-        # Ikon & judul aplikasi
+
         lbl_icon = QLabel()
         lbl_icon.setPixmap(
             qta.icon("fa5s.id-badge", color=theme.PRIMARY).pixmap(48, 48)
@@ -49,7 +49,7 @@ class LoginPage(QWidget):
 
         layout.addSpacing(20)
 
-        # Input username
+
         lbl_u = QLabel("Username / NIM / NIP")
         lbl_u.setStyleSheet("font-weight: 600;")
         layout.addWidget(lbl_u)
@@ -58,7 +58,7 @@ class LoginPage(QWidget):
         self.inp_user.setMinimumHeight(38)
         layout.addWidget(self.inp_user)
 
-        # Input password
+        
         lbl_p = QLabel("Password")
         lbl_p.setStyleSheet("font-weight: 600;")
         layout.addWidget(lbl_p)
@@ -69,20 +69,20 @@ class LoginPage(QWidget):
         self.inp_pass.returnPressed.connect(self.proses_login)
         layout.addWidget(self.inp_pass)
 
-        # Label pesan error
+
         self.lbl_err = QLabel("")
         self.lbl_err.setStyleSheet(f"color: {theme.DANGER}; font-size: 12px;")
         self.lbl_err.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.lbl_err)
 
-        # Tombol login
+
         btn_login = QPushButton("  Masuk")
         btn_login.setIcon(qta.icon("fa5s.sign-in-alt", color="white"))
         btn_login.setMinimumHeight(40)
         btn_login.clicked.connect(self.proses_login)
         layout.addWidget(btn_login)
 
-    # Proses autentikasi login pengguna.
+
     def proses_login(self):
         username = self.inp_user.text().strip()
         password = self.inp_pass.text()

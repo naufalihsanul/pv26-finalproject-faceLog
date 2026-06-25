@@ -9,7 +9,7 @@ from ui.components.history_table import HistoryTable
 
 
 class DosenHistory(QWidget):
-    # Inisialisasi riwayat kelas dosen.
+
     def __init__(self, db):
         super().__init__()
         self.db = db
@@ -19,7 +19,7 @@ class DosenHistory(QWidget):
         self.stack = QStackedWidget()
         layout.addWidget(self.stack)
 
-        # --- Halaman 0: Daftar matkul ---
+
         pg0 = QWidget()
         vl0 = QVBoxLayout(pg0)
         lbl = QLabel("Riwayat — Pilih Mata Kuliah")
@@ -35,7 +35,7 @@ class DosenHistory(QWidget):
         vl0.addWidget(self.tbl_courses)
         self.stack.addWidget(pg0)
 
-        # --- Halaman 1: Tabel riwayat ---
+
         pg1 = QWidget()
         vl1 = QVBoxLayout(pg1)
 
@@ -45,7 +45,7 @@ class DosenHistory(QWidget):
         btn_back.clicked.connect(lambda: self.stack.setCurrentIndex(0))
         vl1.addWidget(btn_back)
 
-        # Komponen tabel riwayat bersama (include search, filter, export)
+
         self.history = HistoryTable(
             headers=["Sesi", "NIM", "Nama", "Status", "Waktu"],
             title="Riwayat Kehadiran Mahasiswa",
@@ -54,7 +54,7 @@ class DosenHistory(QWidget):
         vl1.addWidget(self.history)
         self.stack.addWidget(pg1)
 
-    # Muat matkul dosen.
+
     def load_data(self):
         uid = SessionManager.get_user_id()
         courses = self.db.get_all_courses(dosen_id=uid)
@@ -73,7 +73,7 @@ class DosenHistory(QWidget):
             self.tbl_courses.setCellWidget(i, 2, w)
         self.tbl_courses.setSortingEnabled(True)
  
-    # Tampilkan riwayat absensi matkul.
+
     def buka_riwayat(self, course_id):
         logs = self.db.get_logs_by_course(course_id)
         rows = [

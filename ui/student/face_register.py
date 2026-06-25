@@ -12,7 +12,7 @@ from ui import theme
 
 
 class FaceRegister(QWidget):
-    # Inisialisasi halaman registrasi wajah.
+
     def __init__(self, db):
         super().__init__()
         self.db = db
@@ -32,14 +32,14 @@ class FaceRegister(QWidget):
         self.lbl_status.setStyleSheet(f"color:{theme.TEXT_MUTED}; font-size:13px;")
         layout.addWidget(self.lbl_status)
 
-        # Preview kamera
+
         self.cam_label = QLabel()
         self.cam_label.setFixedSize(480, 360)
         self.cam_label.setStyleSheet("background:black; border-radius:8px;")
         self.cam_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.cam_label, alignment=Qt.AlignCenter)
 
-        # Tombol kontrol kamera
+
         btn_row = QVBoxLayout()
         self.btn_cam = QPushButton("  Mulai Kamera")
         self.btn_cam.setIcon(qta.icon("fa5s.camera", color="white"))
@@ -54,11 +54,11 @@ class FaceRegister(QWidget):
         btn_row.addWidget(self.btn_capture)
         layout.addLayout(btn_row)
 
-        # Timer frame kamera
+
         self._timer = QTimer()
         self._timer.timeout.connect(self.update_frame)
 
-    # Cek status registrasi wajah.
+ 
     def load_data(self):
         uid = SessionManager.get_user_id()
         profile = self.db.get_student_profile(uid)
@@ -69,21 +69,21 @@ class FaceRegister(QWidget):
             self.lbl_status.setText("Wajah belum terdaftar. Klik 'Mulai Kamera' untuk registrasi.")
             self.lbl_status.setStyleSheet(f"color:{theme.DANGER}; font-size:13px;")
 
-    # Nyalakan kamera webcam.
+
     def mulai_kamera(self):
         self._cam = cv2.VideoCapture(0)
         self._timer.start(33)
         self.btn_cam.setEnabled(False)
         self.btn_capture.setEnabled(True)
 
-    # Update frame kamera.
+
     def update_frame(self):
         if not self._cam: return
         ret, frame = self._cam.read()
         if not ret: return
         frame = cv2.flip(frame, 1)
         self._frame = frame.copy()
-        # Gambar kotak wajah
+
         for (x, y, w, h) in self.engine.detect_faces(frame):
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 200, 100), 2)
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -92,7 +92,7 @@ class FaceRegister(QWidget):
             QPixmap.fromImage(QImage(rgb.data, w, h, ch * w, QImage.Format_RGB888))
         )
 
-    # Ambil dan simpan wajah.
+
     def simpan_wajah(self):
         if self._frame is None:
             QMessageBox.warning(self, "Peringatan", "Kamera belum aktif!")
@@ -107,22 +107,22 @@ class FaceRegister(QWidget):
         if emb is None:
             QMessageBox.warning(self, "Gagal", "Gagal mengekstrak fitur wajah."); return
 
-        # Simpan foto referensi
+
         uid = SessionManager.get_user_id()
         os.makedirs("assets/photos", exist_ok=True)
         photo_path = f"assets/photos/{uid}.jpg"
         cv2.imwrite(photo_path, self._frame[y:y + h, x:x + w])
 
-        # Konversi ke list sebelum simpan
+
         emb_list = emb.tolist() if hasattr(emb, "tolist") else emb
         self.db.update_student_embedding(uid, emb_list, photo_path)
 
-        # Matikan kamera
+
         self.matikan_kamera()
         QMessageBox.information(self, "Sukses", "Data wajah berhasil disimpan!")
         self.load_data()
 
-    # Matikan kamera webcam.
+
     def matikan_kamera(self):
         self._timer.stop()
         if self._cam: self._cam.release(); self._cam = None
@@ -130,7 +130,7 @@ class FaceRegister(QWidget):
         self.btn_cam.setEnabled(True)
         self.btn_capture.setEnabled(False)
 
-    # Matikan kamera pindah tab.
+
     def hideEvent(self, event):
         self.matikan_kamera()
         super().hideEvent(event)
